@@ -1,4 +1,4 @@
-package rs.etf.lv193476.sudoku
+package main.scala
 
 class Sudoku(initial: Board, player: Player) {
   val initialWithCoords = initial.appendCoordinatesToFields
@@ -9,7 +9,7 @@ class Sudoku(initial: Board, player: Player) {
     true
   }
   
-  private def isLegal(lst: List[Char]): Boolean = {
+  private def isLegal(lst: Vector[Char]): Boolean = {
     val sum = lst.map {
       case x if x.isDigit => x.asDigit
       case _ => 0
@@ -20,7 +20,7 @@ class Sudoku(initial: Board, player: Player) {
   def isOver(current: Board): Boolean = {
     val allRowsAreLegal = current.state forall isLegal
     val allColsAreLegal = current.transpose.state forall isLegal
-    val submatrixes = subCoords.map(coord => current.subMatAsList(coord._1, coord._2)).toList
+    val submatrixes = subCoords.map(coord => current.subMatAsVector(coord._1, coord._2)).toVector
     val allSubsAreLegal = submatrixes forall isLegal
     allRowsAreLegal && allColsAreLegal && allSubsAreLegal
   }

@@ -1,6 +1,5 @@
-package rs.etf.lv193476.sudoku
+package main.scala
 
-import scala.io.StdIn
 import Console.{RESET, RED, BLUE, BLACK, REVERSED}
 
 class Player(val name: String, initialBoard: Board) {
@@ -16,30 +15,21 @@ class Player(val name: String, initialBoard: Board) {
           case '-' => BLUE
           case _ => RED
         }
-        print(backgroundColor + textColor + currentBoard.state(row)(col))
+        print(textColor + backgroundColor + currentBoard.state(row)(col))
         }
       )
       println
     })
   }
   
-  val turn = (currentBoard: Board) => {
-    print("\u001b[2J")
-    currentBoard.printWithColors(initialBoard)
-    println(s"${RESET}playing...")
-    val c = scala.io.StdIn.readChar()
-    c match {
-      case value if value.isDigit => currentBoard.write(value)
-      case direction => currentBoard.movePencil(direction)
-    }
-  }
-  
-  val next = (currentBoard: Board) => {
-    (ch: Char) => {
-      ch match {
+  def turn (think: () => Char)(currentBoard: Board) = {
+      print("\u001b[2J")
+      currentBoard.printWithColors(initialBoard)
+      println(s"${RESET}playing...")
+      think() match {
         case value if value.isDigit => currentBoard.write(value)
         case direction => currentBoard.movePencil(direction)
       }
     }
-  } 
+  
 }

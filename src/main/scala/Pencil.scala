@@ -1,6 +1,6 @@
-package rs.etf.lv193476.sudoku
+package main.scala
 
-class Pencil(val posX: Int, val posY: Int) {
+case class Pencil(val posX: Int, val posY: Int) {
   def move(direction: Char) =
     direction match {
       case 'd' => moveDown()
@@ -10,24 +10,24 @@ class Pencil(val posX: Int, val posY: Int) {
       case _ => this
   }
   
-  private def movePencil(move: (Pencil) => Pencil) =
+  private def movePencil(move: Pencil => Pencil) =
     move(this)
     
   private def left(pencil: Pencil) = {
     val newY = java.lang.Math.floorMod(pencil.posY - 1, 9)
-    new Pencil(pencil.posX, newY)
+    Pencil(pencil.posX, newY)
   }
   private def right (pencil: Pencil) = {
-      val newY = (pencil.posY + 1) % 9
-      new Pencil(pencil.posX, newY)
-    }
+    val newY = (pencil.posY + 1) % 9
+    Pencil(pencil.posX, newY)
+  }
   private def down = (pencil: Pencil) => {
-      val newX = (pencil.posX + 1) % 9
-      new Pencil(newX, pencil.posY)
-    }
+    val newX = (pencil.posX + 1) % 9
+    Pencil(newX, pencil.posY)
+  }
   private def up(pencil: Pencil) = {
     val newX = java.lang.Math.floorMod(pencil.posX - 1, 9)
-    new Pencil(newX, pencil.posY)
+    Pencil(newX, pencil.posY)
   }
   
   def moveLeft(): Pencil = { 
